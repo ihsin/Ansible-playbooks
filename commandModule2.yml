@@ -1,0 +1,14 @@
+---
+- name: Another test for command module
+  gather_facts: no
+  hosts: localhost
+  tasks:
+     - name: Another test for command module
+       command: "{{ item }}"
+       with_items:
+         - id
+         - uptime
+         - who
+       register: output
+     - name: Debug above output
+       debug: var=output

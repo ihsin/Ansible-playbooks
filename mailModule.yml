@@ -1,0 +1,11 @@
+---
+
+- name: Test sending a mail
+  gather_facts: no
+  hosts: 127.0.0.1
+  tasks:
+    - mail:
+        port: 25
+        to: luharihsin@gmail.com
+        subject: Ansible mail module test
+        body: Hi, I am sent using Ansible

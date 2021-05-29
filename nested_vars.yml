@@ -1,0 +1,29 @@
+---
+- hosts: localhost
+  vars:
+     users_with_items:
+         - name: "alice"
+           personal_directories:
+             - "bob"
+             - "carol"
+             - "dan"
+         - name: "bob"
+           personal_directories:
+             - "alice"
+             - "carol"
+             - "dan"
+     common_directories:
+          - ".ssh"
+          - "loops"
+  tasks:
+     - name: create common users directory with_nested loop
+       file:
+         dest: "/home/{{ item[0]['name'] }}/{{ item[1] }}"
+         state: directory
+       with_nested:
+         - "{{ users_with_items }}"
+         - "{{ common_directories }}"
+
+#item[0] is users_with_items [A list]
+#item[0]['name'] is alice and bob
+#item[1] is .ssh and loops

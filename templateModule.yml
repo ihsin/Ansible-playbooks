@@ -1,0 +1,12 @@
+
+- name: Testing template module
+  hosts: localhost
+  gather_facts: no
+  vars:
+    - {{ name }}
+  tasks:
+    - name: Create a template and fill variables.
+      template:
+           src: /root/rahul.yml.j2
+           dest: /tmp/rahul.yml
+            

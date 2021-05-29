@@ -1,0 +1,10 @@
+---
+- name: use package module
+  hosts: localhost
+  gather_facts: no
+  vars:
+     one: wda
+     two: da
+  tasks:
+     debug:
+        var: one

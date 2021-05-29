@@ -1,0 +1,33 @@
+---
+
+- name: Test file module operations
+  hosts: "*"
+  tasks: 
+     - name: create multiple directories in a loop
+       file:
+         path: "/root/{{ item }}"
+         state: directory
+       with_items:
+        - test_directory1
+        - test_directory2
+        - test_directory3
+     - name: create multiple empty files in one of the directory
+       file:
+         path: "/root/test_directory1/{{ item }}"
+         state: touch
+       with_items:
+         - file1.txt
+         - file2.txt
+         - file3.txt
+     - name: check if files were created
+       file:
+         path: "/root/test_directory1/{{ item }}"
+         state: file
+       with_items:
+        - file1.txt
+        - file2.txt
+        - file3.txt
+     - name: remove the file file1.txt
+       file:
+         path: "/root/test_directory1/file1.txt"
+         state: absent

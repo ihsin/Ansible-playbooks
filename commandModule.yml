@@ -1,0 +1,17 @@
+---
+- name: Testing command module
+  gather_facts: no
+  hosts: localhost
+  vars:
+    TMP: /tmp
+  tasks:
+     - name: Trying a sample command module
+       command: ls
+       args:
+         chdir: "{{ TMP }}"
+#       environment:
+#           TMP: /tmp
+       register: output
+
+     - name: Check ls output
+       debug: var=output

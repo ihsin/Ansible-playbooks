@@ -1,0 +1,22 @@
+---
+- name: command module with fail, when, vars and shell module
+  vars:
+    - first_name: "{{ first_name }}"
+    - last_name: "{{ last_name }}"
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: check for first name  
+      fail:
+        mesg: usage- ansible commandModule3.yml -e first_name=value
+      when: (first_name is undefined) or (first_name|length == 0)
+    - name: check for last name 
+      fail:
+        mesg: usage- ansible commandModule3.yml -e last_name=value
+      when: (last_name is undefined) or (last_name|length == 0)
+    - name: use command module with variables
+      shell: /root/hello.sh "{{ first_name }}" "{{ last_name }}"
+      register: output
+    - name: print output of command executed  
+      debug:
+        var: output

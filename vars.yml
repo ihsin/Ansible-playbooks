@@ -1,0 +1,19 @@
+---
+- name: Testing variable for templates
+  hosts: localhost
+  vars:
+    playbook_vars:
+       - first
+       - second
+       - third
+  tasks:
+     - name: check template on these vars
+       template:
+          src: /root/rahul.yml.j2
+          dest: /tmp/rahul.yml
+     - name: setting variable at task level.
+       vars:
+         one: 56
+         two: 1231
+       debug:
+          var: one
