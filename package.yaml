@@ -1,10 +1,12 @@
 ---
 - name: use package module
   hosts: localhost
-  gather_facts: no
+  gather_facts: yes
   vars:
-     one: wda
-     two: da
+    package_name: "{{ package }}"
   tasks:
-     debug:
-        var: one
+     - name: Installs a package
+       failed_when: (package is undefined) or (package|length == 0)       
+       package:
+          name: "{{ package }}"
+          state: present
