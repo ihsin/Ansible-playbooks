@@ -1,0 +1,14 @@
+---
+- name: execute a fetch module
+  hosts: TEST
+  gather_facts: no
+  vars:
+    my_var:
+      - first_var
+      - second_var
+  tasks:
+    - name: fetch a file from remote host
+      fetch:
+        src: /var/log/dnf.log
+        dest: fetched/dnf.log.{{ inventory_hostname }}
+        flat: true
