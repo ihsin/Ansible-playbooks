@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+    ansibleNode:
+          container_name: ansibleNode
+          image: centos
+          ports:
+            - 22
+          command: bash -c "yum install -y openssh-server python2 && ssh-keygen -A && /usr/sbin/sshd -D"
+          volumes:
+            - ssh:/root
+    ansibleEngine:
+          container_name: ansibleEngine
+          image: "python:buster"
+          command: bash -c 
+                "ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N '' 
+                && touch /root/.ssh/authorized_keys 
+                && cat /root/.ssh/id_rsa.pub >/root/.ssh/authorized_keys 
+                && pip install ansible 
+                && sleep infinity"
+          volumes:
+            - ssh:/root
+          depends_on:
+            - ansibleNode
+volumes:
+    ssh:
